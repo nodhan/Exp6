@@ -41,9 +41,13 @@ public class DBHandler extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
-    Cursor display() {
+    public Cursor display() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("select * from birthday", null);
     }
 
+    public Cursor getData(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        return db.rawQuery("SELECT * FROM birthday WHERE id=?", new String[]{id+""});
+    }
 }

@@ -2,6 +2,7 @@ package com.nodhan.exp6;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,9 @@ import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -114,6 +118,38 @@ public class MainActivity extends AppCompatActivity {
 
     private void generateSMS(int id) {
 
+        Cursor dataId = dbHandler.getData(id);
+        dataId.moveToFirst();
+        int years = Calendar.getInstance().get(Calendar.YEAR) - dataId.getInt(4);
+        String yearth;
+        switch (years) {
+            case 1:
+                yearth = "1st";
+                break;
+            case 2:
+                yearth = "2nd";
+                break;
+            case 3:
+                yearth = "3rd";
+                break;
+            default:
+                yearth = years + "th";
+        }
+        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+
+        smsIntent.setData(Uri.parse("smsto:"));
+        smsIntent.setType("vnd.android-dir/mms-sms");
+        smsIntent.putExtra("address", new String("+91" + dataId.getString(5)));
+        smsIntent.putExtra("sms_body", "Congratulations on surviving an year! Happy " + yearth + " Birthday, " + dataId.getString(1) + "!");
+
+        try {
+            startActivity(smsIntent);
+            finish();
+            Log.i("Finished sending SMS...", "");
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(getApplicationContext(),
+                    "SMS faild, please try again later.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }
