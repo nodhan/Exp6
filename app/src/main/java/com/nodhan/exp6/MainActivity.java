@@ -89,6 +89,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                     textViews[j].setTextSize(20);
                     row[j].addView(textViews[j]);
+                    row[j].setId(Integer.parseInt(data[i][0]));
+                    row[j].setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            generateSMS(v.getId());
+                        }
+                    });
                     tableLayout.addView(row[j]);
                 }
             }
@@ -102,6 +109,10 @@ public class MainActivity extends AppCompatActivity {
             row.addView(view);
             tableLayout.addView(row);
         }
+
+    }
+
+    private void generateSMS(int id) {
 
     }
 
