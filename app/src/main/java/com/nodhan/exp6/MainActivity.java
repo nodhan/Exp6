@@ -53,9 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         Cursor cursor = dbHandler.display();
         int rowCount = cursor.getCount();
-        Log.d("rowCount", rowCount + "");
         int columnCount = cursor.getColumnCount() - 2;
-        Log.d("columnCount", columnCount + "");
 
         data = new String[rowCount][columnCount];
         if (cursor.moveToFirst()) {
@@ -64,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                 data[i][1] = cursor.getString(1);
                 data[i][2] = cursor.getString(2) + "/" + cursor.getString(3) + "/" + cursor.getString(4);
                 data[i][3] = cursor.getString(5);
-                Log.d("DATA", data[i][0] + " " + data[i][1] + " " + data[i][2] + " " + data[i][3]);
                 cursor.moveToNext();
             }
         }
@@ -145,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
         try {
             startActivity(smsIntent);
             finish();
-            Log.i("Finished sending SMS...", "");
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(getApplicationContext(),
                     "SMS faild, please try again later.", Toast.LENGTH_SHORT).show();
