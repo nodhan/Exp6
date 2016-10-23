@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,27 +46,28 @@ public class MainActivity extends AppCompatActivity {
         tableLayout.removeAllViews();
 
         dbHandler = new DBHandler(this, "birthday", null, 1);
-        
+
         Cursor cursor = dbHandler.display();
         int rowCount = cursor.getCount();
-        Log.d("rowCount", rowCount+"");
-        int columnCount = cursor.getColumnCount();
-        Log.d("columnCount", columnCount+"");
-        
+        Log.d("rowCount", rowCount + "");
+        int columnCount = cursor.getColumnCount() - 2;
+        Log.d("columnCount", columnCount + "");
+
         data = new String[rowCount][columnCount];
         if (cursor.moveToFirst()) {
             for (int i = 0; i < rowCount; i++) {
-                for (int j = 0; j < columnCount; j++) {
-                    data[i][j] = cursor.getString(j);
-                    Log.d("DATA[" + i + "][" + j + "]", data[i][j]);
-                }
+                data[i][0] = cursor.getString(0);
+                data[i][1] = cursor.getString(1);
+                data[i][2] = cursor.getString(2) + "/" + cursor.getString(3) + "/" + cursor.getString(4);
+                data[i][3] = cursor.getString(5);
+                Log.d("DATA", data[i][0] + " " + data[i][1] + " " + data[i][2] + " " + data[i][3]);
                 cursor.moveToNext();
             }
         }
-        
-        
+
+
         textViews = new TextView[rowCount + 1]; //TextView array
-        
+
         if (data.length > 0) {
             for (int i = 0; i < data.length; i++) {
 
@@ -82,8 +82,9 @@ public class MainActivity extends AppCompatActivity {
                     row[j].setLayoutParams(layoutParams);
                     textViews[j] = new TextView(this);
                     if (j != rowCount) {
-                        textViews[j].setText(arr[j] + data[i][j]);
+                        textViews[j].setText(new StringBuilder().append(arr[j]).append(data[i][j]));
                     } else {
+                        textViews[j - 1].setText(new StringBuilder().append(arr[j - 1]).append(data[i][j]));
                         textViews[j].setText("");
                     }
                     textViews[j].setTextSize(20);
