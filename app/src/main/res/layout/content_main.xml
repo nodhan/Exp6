@@ -17,15 +17,22 @@
         android:id="@+id/message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="Click on the row whom you want to wish"
-        android:textSize="15sp" />
+        android:textSize="20sp" />
 
-    <TableLayout
-        android:id="@+id/scrollTable"
-        android:layout_below="@id/message"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/message">
 
-    </TableLayout>
+            <TableLayout
+                android:id="@+id/scrollTable"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </TableLayout>
+    </ScrollView>
+
 
 </RelativeLayout>

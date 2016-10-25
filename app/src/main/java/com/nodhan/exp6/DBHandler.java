@@ -28,6 +28,13 @@ public class DBHandler extends SQLiteOpenHelper {
     }
 
 
+    /**
+     * Inserts data into SQLite DB
+     *
+     * @param name name of the person
+     * @param dates int array (date, month, year)
+     * @param mobileNumber phone number of person
+     */
     public void add(String name, int[] dates, String mobileNumber) {
         SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -41,11 +48,20 @@ public class DBHandler extends SQLiteOpenHelper {
         sqLiteDatabase.close();
     }
 
+    /**
+     * Selects all the data in database
+     * @return cursor object
+     */
     public Cursor display() {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("select * from birthday", null);
     }
 
+    /**
+     * Selects the data of the person with id
+     * @param id id of the person
+     * @return cursor object containing the person's data
+     */
     public Cursor getData(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         return db.rawQuery("SELECT * FROM birthday WHERE id=?", new String[]{id+""});
