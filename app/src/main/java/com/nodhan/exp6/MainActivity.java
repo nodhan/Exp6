@@ -3,12 +3,11 @@ package com.nodhan.exp6;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Telephony;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -86,20 +85,15 @@ public class MainActivity extends AppCompatActivity {
                 boolean colorFlag = dateSplit[0].equals(date) && dateSplit[1].equals(month);
 
                 textView = new TextView(this);
+                StringBuilder stringBuilder = new StringBuilder().append(arr[0]).append(data[i][1]).append("\n")
+                        .append(arr[1]).append(data[i][2]).append("\n")
+                        .append(arr[2]).append(data[i][3]).append("\n");
                 if (colorFlag) {
                     row[i].setBackgroundColor(Color.BLACK);
                     textView.setTextColor(Color.WHITE);
-                    textView.setText(
-                            new StringBuilder().append(arr[0]).append(data[i][1]).append("\n")
-                                    .append(arr[1]).append(data[i][2]).append("\n")
-                                    .append(arr[2]).append(data[i][3]).append("\n")
-                    );
+                    textView.setText(stringBuilder);
                 } else {
-                    textView.setText(
-                            new StringBuilder().append("\n").append(arr[0]).append(data[i][1]).append("\n")
-                                    .append(arr[1]).append(data[i][2]).append("\n")
-                                    .append(arr[2]).append(data[i][3]).append("\n").append("\n")
-                    );
+                    textView.setText(stringBuilder.append("\n"));
                 }
                 textView.setTextSize(20);
                 row[i].addView(textView);
@@ -147,21 +141,16 @@ public class MainActivity extends AppCompatActivity {
                     yearth = years + "th";
             }
 
-            Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-
-            smsIntent.setData(Uri.parse("smsto:"));
-            smsIntent.setType("vnd.android-dir/mms-sms");
-            smsIntent.putExtra(Telephony.Sms.ADDRESS, new String("+91" + dataId.getString(5)));
-            smsIntent.putExtra("sms_body", "Congratulations on surviving another year in your life! Happy " + yearth + " Birthday, " + name + "!");
-
-            try {
-                startActivity(smsIntent);
-                finish();
-            } catch (android.content.ActivityNotFoundException ex) {
-                Toast.makeText(this, "SMS failed, try later.", Toast.LENGTH_SHORT).show();
+            if (years == 0) {
+                Toast.makeText(this, "Really? Took birth today only!", Toast.LENGTH_SHORT).show();
+            } else {
+                String message = "Congratulations on surviving another year in your life! Happy " + yearth + " Birthday, " + name + "!";
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage("+91" + dataId.getString(5), null, message, null, null);
+                Toast.makeText(this, "SMS sent", Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(this, name + "'s birthday is not today!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, name + "\'s birthday is not today!!", Toast.LENGTH_SHORT).show();
         }
     }
 
