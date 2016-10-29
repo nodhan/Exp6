@@ -54,6 +54,11 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Checks for empty or null text in EditText
+     *
+     * @param editText the field to be checked
+     */
     void checkForNull(EditText editText) {
         String check = editText.getText().toString();
         if (check.equals("") || check.equals(null)) {

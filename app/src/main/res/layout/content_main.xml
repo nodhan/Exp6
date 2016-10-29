@@ -18,13 +18,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:text="Click on the row whom you want to wish"
+        android:text="To wish click on person's name."
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/message_one"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/message"
+        android:layout_marginBottom="10dp"
+        android:text="Person who has birthday today is shown in black"
         android:textSize="20sp" />
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/message">
+        android:layout_below="@+id/message_one">
 
             <TableLayout
                 android:id="@+id/scrollTable"

@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
             TableRow row[] = new TableRow[rowCount]; //Row in TableLayout
             TableRow.LayoutParams layoutParams = new TableRow.LayoutParams(TableRow.LayoutParams.MATCH_PARENT);
 
-            String arr[] = {"Name : \t\t\t\t\t\t\t\t\t", "DOB : \t\t\t\t\t\t", "Number : \t\t\t\t\t\t"};
+            String arr[] = {"Name : \t", "DOB : \t   "};
             for (int i = 0; i < data.length; i++) {
 
                 row[i] = new TableRow(this);
@@ -86,15 +86,14 @@ public class MainActivity extends AppCompatActivity {
 
                 textView = new TextView(this);
                 StringBuilder stringBuilder = new StringBuilder().append(arr[0]).append(data[i][1]).append("\n")
-                        .append(arr[1]).append(data[i][2]).append("\n")
-                        .append(arr[2]).append(data[i][3]).append("\n");
+                        .append(arr[1]).append(data[i][2]).append("\n");
                 if (colorFlag) {
                     row[i].setBackgroundColor(Color.BLACK);
                     textView.setTextColor(Color.WHITE);
-                    textView.setText(stringBuilder);
                 } else {
-                    textView.setText(stringBuilder.append("\n"));
+                    stringBuilder.append("\n");
                 }
+                textView.setText(stringBuilder);
                 textView.setTextSize(20);
                 row[i].addView(textView);
 
